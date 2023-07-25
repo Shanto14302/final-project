@@ -1,0 +1,42 @@
+@extends('layouts.error')
+
+@section('content')
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex align-items-center min-vh-100">
+                    <div class="w-100 d-block bg-white shadow-lg rounded my-5">
+                        <div class="row">
+                            <div class="col-lg-5 d-none d-lg-block bg-login rounded-left"></div>
+                            <div class="col-lg-7">
+                                <div class="p-5">
+                                    <div class="text-center mb-5">
+                                        <a href="index.html" class="text-dark font-size-22 font-family-secondary">
+                                            <i class="mdi mdi-alpha-x-circle"></i> <b>DREAMS</b>
+                                        </a>
+                                    </div>
+                                    
+                                    <div class="text-center">
+                                        <img src="{{ asset('public/main/assets/images/404-error.svg')}}" alt="error" height="140">
+                                        <h1 class="h4 mb-3 mt-4">Page Not Found</h1>
+                                        <p class="text-muted mb-4 w-75 m-auto">It's looking like you may have taken a wrong turn. Don't worry... it happens to the best of us. Here's a little tip that might help you get back on track.</p>
+                                    </div>
+
+                                    <div class="row mt-4">
+                                        <div class="col-12 text-center">
+                                            <a href="{{ route('home') }}" class="btn btn-success waves-effect waves-light"><i class="mdi mdi-home mr-2"></i>Back to Home </a>
+                                        </div> <!-- end col -->
+                                    </div>
+                                    <!-- end row -->
+                                </div> <!-- end .padding-5 -->
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                    </div> <!-- end .w-100 -->
+                </div> <!-- end .d-flex -->
+            </div> <!-- end col-->
+        </div> <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+@endsection
