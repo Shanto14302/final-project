@@ -44,7 +44,13 @@
                 <div class="card">
                     <div class="div-header mt-3">
                         <h4 class="card-title text-center">Basic Info</h4>
-                        <h4 class="card-title text-right mr-3"><i data-toggle="tooltip" data-placement="bottom" title="Edit basic info." class="fas fa-pen-square" id="trigger_user_basic_edit" style="font-size:21px;cursor:pointer"></i></h4>
+                        <h4 class="card-title text-right mr-3">
+                            @if (Auth::user()->edit_basic==1 || Auth::user()->id==1)
+                            <i data-toggle="tooltip" data-placement="bottom" title="Edit basic info." class="fas fa-pen-square" id="trigger_user_basic_edit" style="font-size:21px;cursor:pointer"></i>
+                            @else
+                                <span class="badge badge-danger">No permission to edit</span>
+                            @endif
+                        </h4>
                         
                     </div>
                     <div class="card-body">
@@ -81,52 +87,64 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body" id="user_basic_edit" style="display:none">
-                        <form action="" id="update_basic_info_form" method="POST">
-                            @csrf
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="" class="lebelcolor">Name</label>
+                    @if (Auth::user()->edit_basic==1 || Auth::user()->id==1)
+                        <div class="card-body" id="user_basic_edit" style="display:none">
+                            <form action="" id="update_basic_info_form" method="POST">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label for="" class="lebelcolor">Name</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" value="{{ $profile_info->name }}" name="user_name">
+                                        <label for=""></label>
+                                    </div>
                                 </div>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control" value="{{ $profile_info->name }}" name="user_name">
-                                    <label for=""></label>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label for="" class="lebelcolor">Email</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" value="{{ $profile_info->email }}" name="user_email">
+                                        <label for=""></label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="" class="lebelcolor">Email</label>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label for="" class="lebelcolor">Phone</label>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <input type="text" class="form-control" value="{{ $profile_info->phone }}" name="user_phone">
+                                        <label for=""></label>
+                                    </div>
                                 </div>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control" value="{{ $profile_info->email }}" name="user_email">
-                                    <label for=""></label>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <button type="submit" id="update_basic_info_button" class="btn btn-info form-control">Update Basic Info</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <label for="" class="lebelcolor">Phone</label>
-                                </div>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control" value="{{ $profile_info->phone }}" name="user_phone">
-                                    <label for=""></label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <button type="submit" id="update_basic_info_button" class="btn btn-info form-control">Update Basic Info</button>
-                                </div>
-                            </div>
+                                
                             
-                           
-                        </form>
-                    </div>
+                            </form>
+                        </div>
+                    @else
+                        
+                    @endif
+                    
                 </div>
             </div> <!-- end col -->
             <div class="col-lg-4">
                 <div class="card">
                     <div class="div-header mt-3">
                         <h4 class="card-title text-center">Additional Info</h4>
-                        <h4 class="card-title text-right mr-3"><i data-toggle="tooltip" data-placement="bottom" title="Update Profile Picture" class="fas fa-camera mr-3" id="trigger_user_image_edit" style="font-size:21px;cursor:pointer"></i><i data-toggle="tooltip" data-placement="bottom" title="Edit additional info." class="fas fa-pen-square" id="trigger_user_additional_edit" style="font-size:21px;cursor:pointer"></i></h4>
+                        <h4 class="card-title text-right mr-3">
+                            @if (Auth::user()->edit_additional==1 || Auth::user()->id==1)
+                            <i data-toggle="tooltip" data-placement="bottom" title="Update Profile Picture" class="fas fa-camera mr-3" id="trigger_user_image_edit" style="font-size:21px;cursor:pointer"></i>
+                            <i data-toggle="tooltip" data-placement="bottom" title="Edit additional info." class="fas fa-pen-square" id="trigger_user_additional_edit" style="font-size:21px;cursor:pointer"></i>
+                            @else
+                                <span class="badge badge-danger">No permission to edit</span>
+                            @endif
+                        </h4>
                         
                     </div>
                     <div class="card-body">
@@ -163,6 +181,7 @@
                             </div>
                         </div>
                     </div>
+                    @if (Auth::user()->edit_additional==1 || Auth::user()->id==1)
                     <div class="card-body" id="user_additional_edit" style="display:none">
                         <form action="" id="update_additional_info_form" method="POST">
                             @csrf
@@ -194,6 +213,15 @@
                                     <label for=""></label>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <label for="" class="lebelcolor">Date of Birth</label>
+                                </div>
+                                <div class="col-lg-8">
+                                    <input type="date" class="form-control" value="{{ $profile_info->profile_user_dob }}" name="dob">
+                                    <label for=""></label>
+                                </div>
+                            </div>
                             <div class="row mt-3">
                                 <div class="col-lg-4">
                                     <label for="" class="lebelcolor">Address</label>
@@ -211,6 +239,7 @@
                            
                         </form>
                     </div>
+                    
                     <div class="card-body" id="user_image_edit" style="display:none">
                         <form action="" id="update_image_info_form" method="POST" enctype="multipart/form-data">
                             @csrf
@@ -222,6 +251,7 @@
                             <button type="submit" id="update_image_info_button" class="btn btn-success form-control">Update Profile Picture</button>
                         </form>
                     </div>
+                    @endif
                 </div>
             </div> <!-- end col -->
             <div class="col-lg-4">
@@ -339,7 +369,6 @@
 @section('js')
     <script src="{{ asset('public/main/plugins/dropify/dropify.min.js')}}"></script>
     <script src="{{ asset('public/main/assets/pages/fileuploads-demo.js')}}"></script>
-    <script src="{{ asset('public/main/assets/pages/fileuploads-demo.js')}}"></script>
 
 
     <script src="{{ asset('resources/js/admin/profile/profile_update.js')}}"></script>
@@ -417,6 +446,10 @@
                         title: 'Opps !',
                         text: err.responseJSON.message,
                         confirmButtonClass: 'btn btn-confirm mt-2',
+                    }).then(()=>{
+                        if(err.responseJSON.message=='Unauthenticated.'){
+                            window.location.reload();
+                        }
                     });
                 }
             })

@@ -78,6 +78,7 @@ class AdminProfileController extends Controller
             'profile_user_mother_name' => $data->mother_name,
             'profile_user_gender' => $data->gender,
             'profile_user_address' => $data->address,
+            'profile_user_dob' => $data->dob,
         ]);
 
         if($update){

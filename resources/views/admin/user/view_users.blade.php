@@ -364,6 +364,8 @@
                                         <th>User Phone</th>
                                         <th>User Role</th>
                                         <th>User Status</th>
+                                        <th>Edit Status (Basic)</th>
+                                        <th>Edit Status (Additional)</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -416,6 +418,7 @@
                         $('#table_data').empty();
                         $.each(data.users,function(key,value){
                             let sts = '';
+                            let ests = '';
                             let disable = '';
                             let disable2 = '';
                             if(value.status=='Active'){
@@ -425,6 +428,22 @@
                                 sts = '';
                             }
 
+                            if(value.edit_basic==1){
+                                 ests = 'checked'
+                                 ests_value = 'Editable'
+                             }else{
+                                 ests = '';
+                                 ests_value = 'Not Editable'
+                             }
+
+                             if(value.edit_additional==1){
+                                 asts = 'checked'
+                                 asts_value = 'Editable'
+                             }else{
+                                 asts = '';
+                                 asts_value = 'Not Editable'
+                             }
+
                             if(value.id=={{ Auth::user()->id }}){
                                 disable = 'disabled';
                             }
@@ -432,7 +451,7 @@
                                 disable2 = 'disabled';
                             }
                             var role = value.role==1?"Admin":value.role==2?"Supervisor":value.role==3?"Editor":"";
-                            $('#table_data').append('<tr id="trid-'+value.id+'"><td>'+value.name+'</td> <td>'+value.email+'</td><td>'+value.phone+'</td><td>'+role+'</td><td id="td-'+value.id+'" class="text-center">'+value.status+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input '+disable+' '+disable2+' id="change_status" type="checkbox" data-id="'+value.id+'" data-toggle="switchery" '+sts+' data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" /></td><td class="text-center"><button class="btn btn-primary btn-sm" id="edit_button" data-edit="'+value.id+'"><i class="fas fa-pen-nib"></i></button> &nbsp; <button class="btn btn-danger btn-sm" id="delete_button" data-delete="'+value.id+'"><i class="fas fa-prescription-bottle"></i></button> &nbsp; <button class="btn btn-secondary btn-sm" id="display_button" data-display="'+value.id+'"><i class="fas fa-desktop"></i></button> &nbsp; <button class="btn btn-outline-dark btn-sm" '+disable+' id="mail_button" data-mail="'+value.id+'"><i class="far fa-paper-plane"></i></button></td></tr>');
+                            $('#table_data').append('<tr id="trid-'+value.id+'"><td>'+value.name+'</td> <td>'+value.email+'</td><td>'+value.phone+'</td><td>'+role+'</td><td id="td-'+value.id+'" class="text-center">'+value.status+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input '+disable+' '+disable2+' id="change_status" type="checkbox" data-id="'+value.id+'" data-toggle="switchery" '+sts+' data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" /></td><td id="tdbe-'+value.id+'" class="text-center">'+ests_value+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input '+disable+' '+disable2+' id="change_basic_edit_status" type="checkbox" data-basicedit="'+value.id+'" data-toggle="switchery" '+ests+' data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" /></td><td id="tdbeb-'+value.id+'" class="text-center">'+asts_value+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input '+disable+' '+disable2+' id="change_additional_edit_status" type="checkbox" data-additionaledit="'+value.id+'" data-toggle="switchery" '+asts+' data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" /></td><td class="text-center"><button class="btn btn-primary btn-sm" id="edit_button" data-edit="'+value.id+'"><i class="fas fa-pen-nib"></i></button> &nbsp; <button class="btn btn-danger btn-sm" id="delete_button" data-delete="'+value.id+'"><i class="fas fa-prescription-bottle"></i></button> &nbsp; <button class="btn btn-secondary btn-sm" id="display_button" data-display="'+value.id+'"><i class="fas fa-desktop"></i></button> &nbsp; <button class="btn btn-outline-dark btn-sm" '+disable+' id="mail_button" data-mail="'+value.id+'"><i class="far fa-paper-plane"></i></button></td></tr>');
                         });
                         $('[data-toggle="switchery"]').each(function (idx, obj) {
                             new Switchery($(this)[0], $(this).data());
@@ -501,6 +520,132 @@
             error : function(){
                 document.getElementById(tdid).innerHTML=prev;
                 $('[data-id="'+id+'"]').attr('checked');
+                // $('[data-id="'+id+'"]').each(function (idx, obj) {
+                //     new Switchery($(this)[0], $(this).data());
+                // });
+                Swal.fire({
+                    type: 'error',
+                    title: 'Opps !',
+                    text: 'Server error',
+                    confirmButtonClass: 'btn btn-confirm mt-2',
+                });
+            }
+        })
+
+
+    })
+
+    //basic edit status change
+    $(document).on("change","#change_basic_edit_status",function(){
+        var id = $(this).data('basicedit');
+
+        $(this).attr('id','in-'+id);
+        // var tdid = 'td-'+id;
+        var tdid = $(this).closest('td').attr('id');
+        var trid = $(this).closest('tr').attr('id');
+        var prev = document.getElementById(tdid).innerHTML;
+         $('#'+tdid).empty();
+        document.getElementById(tdid).innerHTML = '<i style="font-size:18px;" class="fas fa-spinner fa-spin"></i>'
+        $.ajax({
+            type : 'GET',
+            url : 'update-user-basic-edit-status/'+id,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            dataType: 'JSON',
+            success : function(value){
+                console.log(value);
+                if(value.edit_basic==1){
+                    ests = 'checked'
+                    ests_value = 'Editable'
+                }else{
+                    ests = '';
+                    ests_value = 'Not Editable'
+                }
+                if(value.edit_basic==1){
+                    if(value.id=={{ Auth::user()->id }}){
+                        $('#'+tdid).empty();
+                        document.getElementById(tdid).innerHTML=ests_value+' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input disabled id="change_basic_edit_status" type="checkbox" data-basicedit="'+value.id+'" data-toggle="switchery" checked data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" />' 
+                    }else{
+                        $('#'+tdid).empty();
+                        document.getElementById(tdid).innerHTML=ests_value+' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="change_basic_edit_status" type="checkbox" data-basicedit="'+value.id+'" data-toggle="switchery" checked data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" />' 
+                    }
+                    
+                }else{
+                    document.getElementById(tdid).innerHTML=ests_value+' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="change_basic_edit_status" type="checkbox" data-basicedit="'+value.id+'" data-toggle="switchery" data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" />' 
+                }
+
+                $('[data-basicedit="'+id+'"]').each(function (idx, obj) {
+                    new Switchery($(this)[0], $(this).data());
+                });
+                
+                // $(this).Switchery();
+                
+            },
+            error : function(){
+                document.getElementById(tdid).innerHTML=prev;
+                $('[data-basicedit="'+id+'"]').attr('checked');
+                // $('[data-id="'+id+'"]').each(function (idx, obj) {
+                //     new Switchery($(this)[0], $(this).data());
+                // });
+                Swal.fire({
+                    type: 'error',
+                    title: 'Opps !',
+                    text: 'Server error',
+                    confirmButtonClass: 'btn btn-confirm mt-2',
+                });
+            }
+        })
+
+
+    })
+
+    //additional edit status change
+    $(document).on("change","#change_additional_edit_status",function(){
+        var id = $(this).data('additionaledit');
+
+        $(this).attr('id','in-'+id);
+        // var tdid = 'td-'+id;
+        var tdid = $(this).closest('td').attr('id');
+        var trid = $(this).closest('tr').attr('id');
+        var prev = document.getElementById(tdid).innerHTML;
+         $('#'+tdid).empty();
+        document.getElementById(tdid).innerHTML = '<i style="font-size:18px;" class="fas fa-spinner fa-spin"></i>'
+        $.ajax({
+            type : 'GET',
+            url : 'update-user-additional-edit-status/'+id,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            dataType: 'JSON',
+            success : function(value){
+                console.log(value);
+                if(value.edit_additional==1){
+                    asts = 'checked'
+                    asts_value = 'Editable'
+                }else{
+                    asts = '';
+                    asts_value = 'Not Editable'
+                }
+                if(value.edit_additional==1){
+                    if(value.id=={{ Auth::user()->id }}){
+                        $('#'+tdid).empty();
+                        document.getElementById(tdid).innerHTML=asts_value+' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input disabled id="change_additional_edit_status" type="checkbox" data-additionaledit="'+value.id+'" data-toggle="switchery" checked data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" />' 
+                    }else{
+                        $('#'+tdid).empty();
+                        document.getElementById(tdid).innerHTML=asts_value+' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="change_additional_edit_status" type="checkbox" data-additionaledit="'+value.id+'" data-toggle="switchery" checked data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" />' 
+                    }
+                    
+                }else{
+                    document.getElementById(tdid).innerHTML=asts_value+' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="change_additional_edit_status" type="checkbox" data-additionaledit="'+value.id+'" data-toggle="switchery" data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" />' 
+                }
+
+                $('[data-additionaledit="'+id+'"]').each(function (idx, obj) {
+                    new Switchery($(this)[0], $(this).data());
+                });
+                
+                // $(this).Switchery();
+                
+            },
+            error : function(){
+                document.getElementById(tdid).innerHTML=prev;
+                $('[data-additionaledit="'+id+'"]').attr('checked');
                 // $('[data-id="'+id+'"]').each(function (idx, obj) {
                 //     new Switchery($(this)[0], $(this).data());
                 // });

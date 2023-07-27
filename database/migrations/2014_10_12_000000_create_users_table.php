@@ -21,6 +21,10 @@ return new class extends Migration
             $table->text('status')->default('Active');
             $table->integer('role')->comment('Admin=1 , Supervisor=2 , Editor=3 , Customer=4');
             $table->integer('delete')->default(0);
+            $table->integer('edit_basic')->default(0);
+            $table->string('edit_basic_endtime')->nullable();
+            $table->integer('edit_additional')->default(0);
+            $table->string('edit_additional_endtime')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

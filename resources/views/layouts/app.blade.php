@@ -239,12 +239,12 @@
             <div data-simplebar class="h-100">
 
                 <div class="navbar-brand-box">
-                    <a href="{{ route('home') }}" class="logo">
-                        <i class="mdi mdi-alpha-x-circle"></i>
+                    <a href="{{ route('home') }}" class="logo text-center">
+                        {{-- <i class="mdi mdi-alpha-x-circle"></i>
                         <span>
                             Xacton
-                        </span>
-                        
+                        </span> --}}
+                        <img src="{{ asset('public/logo.jpg') }}" height="60px" width="200px" alt="">
                     </a><br>
                     <span class="text-white">
                         {{ Auth::user()->role==1?'Admin':(Auth::user()->role==2?'Supervisor':(Auth::user()->role==3?'Editor':'Customer')) }}
@@ -269,7 +269,7 @@
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('view_users') }}">View Users</a></li>
                                 <li><a href="{{ route('reset_request') }}" class="waves-effect"><span>Reset Requests</span></a></li> 
-                                <li><a href="{{ route('logo') }}" class="waves-effect"><span>Logo</span></a></li> 
+                                <li><a href="{{ route('logo') }}" class="waves-effect"><span>Web Images</span></a></li> 
                             </ul>
                         </li>
                         @endif

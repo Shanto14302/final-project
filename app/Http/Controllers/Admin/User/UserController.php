@@ -210,4 +210,39 @@ class UserController extends Controller
             return response()->json(['message'=>1],422);
         }
     }
+
+    
+    public function EditBasicStaus(){
+        $user = User::where('id',request()->id)->first();
+        if($user->edit_basic==0){
+            User::where('id',request()->id)->update([
+                'edit_basic' => 1,
+                'edit_basic_endtime' => Carbon::now()->addMinutes(2),
+            ]);
+        }else{
+            User::where('id',request()->id)->update([
+                'edit_basic' => 0,
+                'edit_basic_endtime' => NULL,
+            ]);
+        }
+        $user = User::where('id',request()->id)->first();
+        return $user;
+    }
+
+    public function EditAdditionalStaus(){
+        $user = User::where('id',request()->id)->first();
+        if($user->edit_additional==0){
+            User::where('id',request()->id)->update([
+                'edit_additional' => 1,
+                'edit_additional_endtime' => Carbon::now()->addMinutes(2),
+            ]);
+        }else{
+            User::where('id',request()->id)->update([
+                'edit_additional' => 0,
+                'edit_additional_endtime' => NULL,
+            ]);
+        }
+        $user = User::where('id',request()->id)->first();
+        return $user;
+    }
 }

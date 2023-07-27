@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 
 class UserMail extends Mailable
 {
@@ -31,6 +32,7 @@ class UserMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from : Auth::user()->email,
             subject: $this->subject,
         );
     }

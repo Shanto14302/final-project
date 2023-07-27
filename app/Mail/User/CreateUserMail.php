@@ -31,6 +31,7 @@ class CreateUserMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from : Auth::user()->email,
             subject: 'Create User Mail',
         );
     }
@@ -41,6 +42,7 @@ class CreateUserMail extends Mailable
     public function content(): Content
     {
         return new Content(
+            
             view: 'mail.user.create_user',
             with :['name'=>$this->name,'password'=>$this->password,'sender'=>Auth::user()->email]
         );

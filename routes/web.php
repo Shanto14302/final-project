@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Auth\ForgetPasswordController;
 use App\Http\Controllers\Admin\Profile\AdminProfileController;
 use App\Http\Controllers\Admin\User\LogoController;
 use App\Http\Controllers\Admin\User\UserController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -96,10 +97,15 @@ Route::controller(UserController::class)->middleware('auth','status_check','afpm
     Route::get('/delete-user/{id}','DeleteUser');
     Route::post('/send-mail-user','MailToUser');
     Route::post('/add-user','AddUser');
+
+    //edit status
+    Route::get('/update-user-basic-edit-status/{id}','EditBasicStaus');
+    Route::get('/update-user-additional-edit-status/{id}','EditAdditionalStaus');
 });
 
 Route::controller(LogoController::class)->middleware('auth','status_check','afpm')->prefix('admin')->group(function(){
     Route::get('/logo','GetLogo')->name('logo');
+    Route::post('/upload-logo','UploadLogo')->name('upload_logo');
 
 });
 
@@ -111,6 +117,8 @@ Route::controller(LogoController::class)->middleware('auth','status_check','afpm
 
 //access
 
-Route::get('/access-denied-admin',function(){
+Route::middleware('auth')->get('/access-denied-admin',function(){
     return view('access.access_denied');
 })->name('access_denied_admin');
+
+
