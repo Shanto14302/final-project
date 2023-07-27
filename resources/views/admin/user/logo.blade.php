@@ -3,7 +3,10 @@
     Logo
 @endsection
 @section('css')
+<link href="{{ asset('public/main/plugins/select2/select2.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('public/main/plugins/dropify/dropify.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('public/main/plugins/switchery/switchery.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('public/main/assets/css/theme.min.css')}}" rel="stylesheet" type="text/css" />
 <style>
     .lebelcolor {
         color: #101418 !important;
@@ -31,25 +34,29 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-6 mx-auto">
+            <div class="col-lg-4">
                 <div class="card">
                     <div class="div-header mt-3">
-                        <h4 class="card-title text-center">Application Image Manger</h4>
+                        <h4 class="card-title text-center">Application Content Manger</h4>
                         <h4 class="card-title text-right mr-3"></h4>
                     </div>
                     <div class="card-body">
                         <form action="" id="web_content_form" method="POST" enctype="multipart/form-data">
                             <div class="row">
-                                <div class="from-group col-md-6 mt-2">
-                                    <label for="" class="labelcolor">Select Position</label>
-                                    <select name="position" id="position" class="form-control">
+                                <div class="from-group col-md-4 mt-2">
+                                    <label for="" class="labelcolor">Content For</label>
+                                    <select name="content_for" id="content_for" class="form-control">
                                         <option value="" selected disabled>Please Select</option>
-                                        <option value="admin_top">Admin Top</option>
-                                        <option value="admin_bottom">Admin Bottom</option>
-                                        <option value="admin_title_image">Admin Title Image</option>
+                                        <option value="admin">Admin</option>
                                     </select>
                                 </div>
-                                <div class="from-group col-md-6 mt-2">
+                                <div class="from-group col-md-4 mt-2">
+                                    <label for="" class="labelcolor">Select Position</label>
+                                    <select name="position" id="position" class="form-control">
+                                        <option value="" selected disabled>Please Select Content For First</option>
+                                    </select>
+                                </div>
+                                <div class="from-group col-md-4 mt-2">
                                     <label for="" class="labelcolor">Select Type</label>
                                     <select name="type" id="type" class="form-control">
                                         <option value="" selected disabled>Please Select Position First</option>
@@ -67,73 +74,78 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-8">
+                <div class="card pb-4">
+                    <div class="div-header mt-3">
+                        <h4 class="card-title text-center">Application Content View</h4>
+                        <h4 class="card-title text-right mr-3"></h4>
+                    </div>
+                    <div class="car-body px-4 mb-4">
+                        <form action="" id="content_search_form"  method="POST">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-3 mt-3">
+                                    <label for="">For</label>
+                                    <select name="content_for_serach" class="form-control" id="content_for_serach" data-toggle="select2">
+                                        <option value="">Please Select</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <label for="">Position</label>
+                                    <select name="position_serach" class="form-control" id="position_serach" data-toggle="select2">
+                                        <option value="">Please Select</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <label for="">Type</label>
+                                    <select name="type_serach" class="form-control" id="type_serach" data-toggle="select2">
+                                        <option value="">Please Select</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mt-3">
+                                    <button type="submit" class="btn btn-info form-control" id="content_search_button" style="margin-top:28px; ">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="car-body px-4 mt-4" id="search_result" style="display: none;">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" >
+                                <thead>
+                                    <tr class="bg-primary text-center text-white">
+                                        <th>For</th>
+                                        <th>Position</th>
+                                        <th>Type</th>
+                                        <th>Content</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table_data">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
     </div>
 </div>
 @endsection 
 @section('js')
+    <script src="{{ asset('public/main/plugins/select2/select2.min.js')}}"></script>
     <script src="{{ asset('public/main/plugins/dropify/dropify.min.js')}}"></script>
     <script src="{{ asset('public/main/assets/pages/fileuploads-demo.js')}}"></script>
+    <script src="{{ asset('public/main/plugins/switchery/switchery.min.js')}}"></script>
     <script src="{{ asset('resources/js/admin/logo.js') }}"></script>
-
     <script>
-        // function content_form(){
-        //     var flag = 0;
-        //     var position = $('#position').val();
-        //     var type = $('#type').val();
-        //     if(!position){
-        //         flag=1;
-        //         Swal.fire({
-        //             type: 'error',
-        //             title: '',
-        //             text: 'Position required',
-        //             showConfirmButton: true,
-        //         })
-        //     }else{
-        //         flag=0;
-        //     }
-        //     if(!type){
-        //         flag=1;
-        //         Swal.fire({
-        //             type: 'error',
-        //             title: '',
-        //             text: 'Type required',
-        //             showConfirmButton: true,
-        //         })
-        //     }else{
-        //         flag=0;
-        //     }
-        //     if(type=='image'){
-        //         if(!$('#image').val()){
-        //             flag=1;
-        //             Swal.fire({
-        //                 type: 'error',
-        //                 title: '',
-        //                 text: 'Image required',
-        //                 showConfirmButton: true,
-        //             })
-        //         }else{
-        //             var Extension = $('#image').val().substring($('#image').val().lastIndexOf('.') + 1).toLowerCase();
-        //             if (Extension == "png" || Extension == "jpeg" || Extension == "jpg") {
-        //                 flag = 0;
-                       
-        //             }else{
-        //                 flag = 1;
-        //                 Swal.fire({
-        //                     type: 'error',
-        //                     title: '',
-        //                     text: 'Image should be [png,jpg,jpeg]',
-        //                     showConfirmButton: true,
-        //                 })
-        //             }
-        //         }
-                
-                
-        //     }
-        //     if(flag==0){
-
-        //     }
-        // }
+        $('[data-toggle="select2"]').select2();
+     </script>
+    <script>
         $('#web_content_form').submit(function(e){
             e.preventDefault();
             $.ajax({
@@ -146,12 +158,162 @@
                 cache: false,
                 processData: false,
                 success : function(data){
-
+                    Swal.fire({
+                        type: 'success',
+                        title: '',
+                        text: 'Web content uploaded success',
+                        showConfirmButton: false,
+                        timer:1500,
+                    }).then(()=>{
+                        $('#web_content_form').trigger('reset');
+                    })
                 },
                 error : function(err){
-                    console.log(err.responseJSON.message);
+                    Swal.fire({
+                        type: 'error',
+                        title: '',
+                        text: err.responseJSON.message,
+                        showConfirmButton: true,
+                    })
                 }
             })
         })
+        $('#content_search_form').submit(function(e){
+            e.preventDefault();
+            $('#content_search_button').addClass('disabled');
+            $('#content_search_button').html('Searching &nbsp; <i class="mdi mdi-rotate-right mdi-spin"></i>');
+            $.ajax({
+                type : 'POST',
+                url : '{{ route("search_logo") }}',
+                data: new FormData(this),
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success : function(data){
+                    $('#content_search_button').removeClass('disabled');
+                    $('#content_search_button').html('Search');
+                    document.getElementById('search_result').style.display='block';
+                    $('#table_data').empty();
+                    $.each(data,function(key,value){
+                        if(value.logo_type=='image'){
+                            url = 'http://localhost/dream/admin/'+value.logo_image;
+                            content = '<img src="'+url+'">'
+                            size = '<strong>Size : </strong>'+value.logo_image_size+' KB';
+                            dimention = value.logo_image_dimention;
+                        }else{
+                            content = value.logo_image;
+                            size='';
+                            dimention='';
+                        }
+                        if(value.logo_status=='Active'){   
+                            sts = 'checked'
+                        }else{
+                            sts = '';
+                        }
+                        $('#table_data').append('<tr><td>'+value.logo_for+'</td><td>'+value.logo_position+'</td><td>'+value.logo_type+'<br>'+size+'<br>'+dimention+'</td><td>'+content+'</td><td class="text-center">'+value.logo_status+' &nbsp;&nbsp; <input '+sts+' id="change_status" type="checkbox" data-status="'+value.logo_id+'" data-toggle="switchery" data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" /></td><td class="text-center"><button class="btn btn-danger btn-sm" id="delete_button" data-delete="'+value.logo_id+'">Delete</button></td></tr>');
+                    });
+                    $('[data-toggle="switchery"]').each(function (idx, obj) {
+                        new Switchery($(this)[0], $(this).data());
+                    });
+                },
+                error : function(err){
+                    $('#content_search_button').removeClass('disabled');
+                    $('#content_search_button').html('Search');
+                    document.getElementById('search_result').style.display='none';
+                    $('#table_data').empty();
+                    Swal.fire({
+                        type: 'error',
+                        title: '',
+                        text: err.responseJSON.message,
+                        showConfirmButton: true,
+                    })
+                }
+            });
+        });
+
+        $(document).on("change","#change_status",function(){
+            var id = $(this).data('status');
+            $.ajax({
+                type : 'GET',
+                url : 'logo-status-change/'+id,
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                dataType: 'JSON',
+                success : function(data){
+                    Swal.fire({
+                        type: 'success',
+                        title: '',
+                        text: 'Content status changed successfully',
+                        showConfirmButton: true,
+                    }).then(()=>{
+                        $('#content_search_button').click();
+                    })
+                },
+                error : function(err){
+                    Swal.fire({
+                        type: 'error',
+                        title: '',
+                        text: err.responseJSON.message,
+                        showConfirmButton: true,
+                    }).then(()=>{
+                        $('#content_search_button').click();
+                    })
+                }
+            })
+        });
+
+        $(document).on("click","#delete_button",function(){
+            var id = $(this).data('delete');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                confirmButtonClass: 'btn btn-success mt-2',
+                cancelButtonClass: 'btn btn-danger ml-2 mt-2',
+                buttonsStyling: false
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        type : 'GET',
+                        url : 'delete-logo/'+id,
+                        dataType: 'JSON',
+                        success : function(data){
+                            Swal.fire({
+                                type: 'success',
+                                title: '',
+                                text: 'Content deleted successfully',
+                                showConfirmButton: true,
+                            }).then(()=>{
+                                $('#content_search_button').click();
+                            })
+                        },
+                        error : function(err){
+                            Swal.fire({
+                                type: 'error',
+                                title: '',
+                                text: err.responseJSON.message,
+                                showConfirmButton: true,
+                            }).then(()=>{
+                                $('#content_search_button').click();
+                            })
+                        }
+                    })
+                }else if (
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    Swal.fire({
+                    title: 'Cancelled',
+                    text: 'Delete request cancelled',
+                    type: 'error'
+                    })
+                }
+            })
+            
+        });
     </script>
 @endsection

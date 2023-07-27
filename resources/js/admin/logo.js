@@ -1,3 +1,9 @@
+$('#content_for').change(function(){
+    if($(this).val()=='admin'){
+        $('#position').empty();
+        $('#position').append('<option value="" selected disabled>Please Select</option><option value="admin_top">Admin Top</option><option value="admin_bottom">Admin Bottom</option><option value="admin_title_image">Admin Title Image</option>')
+    }
+});
 $('#position').change(function(){
     if($(this).val()=='admin_title_image'){
         $('#type').empty();
@@ -26,5 +32,22 @@ $('#type').change(function(){
     }else{
         $('#upload_type').empty();
         $('#upload_type').append('<label class="labelcolor" for="">Enter Text</label><textarea name="text" id="text" class="form-control" rows="6"></textarea>')
+    }
+})
+
+$('#content_for_serach').change(function(){
+    if($(this).val()=='admin'){
+        $('#position_serach').empty();
+        $('#position_serach').append('<option value="">Please Select</option><option value="admin_top">Admin Top</option><option value="admin_bottom">Admin Bottom</option><option value="admin_title_image">Admin Title Image</option>')
+    }
+});
+
+$('#position_serach').change(function(){
+    if($(this).val()=='admin_title_image'){
+        $('#type_serach').empty();
+        $('#type_serach').append('<option value="">Please Select</option><option value="image">Image</option>')
+    }else{
+        $('#type_serach').empty();
+        $('#type_serach').append('<option value="">Please Select</option><option value="image">Image</option><option value="text">Text</option>')
     }
 })

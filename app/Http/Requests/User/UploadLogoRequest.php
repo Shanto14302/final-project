@@ -22,8 +22,10 @@ class UploadLogoRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'content_for'=>'required',
             'position'=>'required',
             'type'=>'required',
+            
         ];
     }
 }

@@ -106,6 +106,9 @@ Route::controller(UserController::class)->middleware('auth','status_check','afpm
 Route::controller(LogoController::class)->middleware('auth','status_check','afpm')->prefix('admin')->group(function(){
     Route::get('/logo','GetLogo')->name('logo');
     Route::post('/upload-logo','UploadLogo')->name('upload_logo');
+    Route::post('/search-logo','SearchLogo')->name('search_logo');
+    Route::get('/logo-status-change/{id}','LogoStatusChange');
+    Route::get('/delete-logo/{id}','DeleteLogo');
 
 });
 

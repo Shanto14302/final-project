@@ -236,15 +236,28 @@
         <!-- ========== Left Sidebar Start ========== -->
         <div class="vertical-menu">
 
-            <div data-simplebar class="h-100">
+            <div data-simplebar class="h-100" style="background: rgb(34, 33, 33)">
 
                 <div class="navbar-brand-box">
                     <a href="{{ route('home') }}" class="logo text-center">
-                        {{-- <i class="mdi mdi-alpha-x-circle"></i>
-                        <span>
-                            Xacton
-                        </span> --}}
-                        <img src="{{ asset('public/logo.jpg') }}" height="60px" width="200px" alt="">
+                        {{-- <i class="mdi mdi-alpha-x-circle"></i> --}}
+                        @php
+                            $logo = DB::table('logos')->where('logo_delete',0)->where('logo_for','Admin')->where('logo_position','admin_top')->where('logo_status','Active')->first();
+                        @endphp
+                        @if ($logo)
+                        @if($logo->logo_type=='text')
+                            <span>
+                                {{ $logo->logo_image }}
+                            </span>
+                            @else
+                                <img src="{{ asset($logo->logo_image) }}" alt="">
+                            @endif
+                        @else
+                            
+                        @endif
+                        
+                        
+                        
                     </a><br>
                     <span class="text-white">
                         {{ Auth::user()->role==1?'Admin':(Auth::user()->role==2?'Supervisor':(Auth::user()->role==3?'Editor':'Customer')) }}
@@ -319,7 +332,15 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            {{ date('Y') }} © Xacton.
+                            @php
+                            $logo = DB::table('logos')->where('logo_delete',0)->where('logo_for','Admin')->where('logo_position','admin_bottom')->where('logo_status','Active')->first();
+                            @endphp
+                            {{ date('Y') }} © 
+                            @if ($logo && $logo->logo_type=='text')
+                               all site reserved by {{ $logo->logo_image }}
+                            @elseif($logo && $logo->logo_type=='image')
+                            <img src="{{ asset($logo->logo_image) }}" height="60px" width="200px" alt="">
+                            @endif
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-right d-none d-sm-block">

@@ -16,9 +16,10 @@ return new class extends Migration
             $table->string('logo_position');
             $table->string('logo_for');
             $table->string('company_name');
+            $table->string('logo_type');
             $table->string('logo_image');
-            $table->string('logo_image_dimention')->comment('Width x Height');
-            $table->string('logo_image_size')->comment('KB');
+            $table->string('logo_image_dimention')->nullable()->comment('Width x Height');
+            $table->string('logo_image_size')->nullable()->comment('KB');
             $table->text('logo_status')->default('Active');
             $table->integer('logo_delete')->default(0);
             $table->timestamps();
