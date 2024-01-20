@@ -394,7 +394,7 @@
 <script>
     $(document).on("click",'#refresh',function(){
         $("#user_type").val(''); 
-        $('[data-toggle="select2"]').val(null).trigger('change');;
+        $('[data-toggle="select2"]').val(null).trigger('change');
     });
 
 
@@ -688,7 +688,7 @@
                 if(data.role==1){
                     admins = 'selected';
                 }else if(data.role==2){
-                    supervisors = 'selected';
+                    supervisors = 'selected'; 
                 }else if(data.role==3){
                     editors = 'selected';
                 }else if(data.role==4){

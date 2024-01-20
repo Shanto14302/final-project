@@ -54,7 +54,7 @@ class AdminProfileController extends Controller
     }
 
     public function UpdateBasicInfo(AdminBasicInfoUpdate $data){
-        $update = User::where('id',Auth::user()->id)->update([
+        $update = User::where('id',Auth::user()->id)->update([ 
             'name' => $data->user_name,
             'email' => $data->user_email,
             'phone' => $data->user_phone,

@@ -5,6 +5,8 @@ namespace App\Http;
 use App\Http\Middleware\Admin\AdminForgetPasswordMiddleware;
 use App\Http\Middleware\Admin\CheckLogeedInMiddleware;
 use App\Http\Middleware\Admin\UserStatusCheckMiddleware;
+use App\Http\Middleware\StudentMiddleware;
+use App\Http\Middleware\TeacherMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -71,5 +73,7 @@ class Kernel extends HttpKernel
         'checkloggedin' => CheckLogeedInMiddleware::class,
         'afpm' => AdminForgetPasswordMiddleware::class,
         'status_check' => UserStatusCheckMiddleware::class,
+        'student' => StudentMiddleware::class,
+        'teacher' => TeacherMiddleware::class,
     ];
 }

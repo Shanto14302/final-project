@@ -48,6 +48,7 @@
                                     <select name="content_for" id="content_for" class="form-control">
                                         <option value="" selected disabled>Please Select</option>
                                         <option value="admin">Admin</option>
+                                        {{-- <option value="spark">Spark It</option> --}}
                                     </select>
                                 </div>
                                 <div class="from-group col-md-4 mt-2">
@@ -89,6 +90,7 @@
                                     <select name="content_for_serach" class="form-control" id="content_for_serach" data-toggle="select2">
                                         <option value="">Please Select</option>
                                         <option value="admin">Admin</option>
+                                        {{-- <option value="spark">Spark It</option> --}}
                                     </select>
                                 </div>
                                 <div class="col-md-3 mt-3">
@@ -150,7 +152,7 @@
             e.preventDefault();
             $.ajax({
                 type : 'POST',
-                url : '{{ route("upload_logo") }}',
+                url : '{{ route("upload_logo") }}', 
                 data: new FormData(this),
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 dataType: 'JSON',
@@ -212,7 +214,7 @@
                         }else{
                             sts = '';
                         }
-                        $('#table_data').append('<tr><td>'+value.logo_for+'</td><td>'+value.logo_position+'</td><td>'+value.logo_type+'<br>'+size+'<br>'+dimention+'</td><td>'+content+'</td><td class="text-center">'+value.logo_status+' &nbsp;&nbsp; <input '+sts+' id="change_status" type="checkbox" data-status="'+value.logo_id+'" data-toggle="switchery" data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" /></td><td class="text-center"><button class="btn btn-danger btn-sm" id="delete_button" data-delete="'+value.logo_id+'">Delete</button></td></tr>');
+                        $('#table_data').append('<tr><td>'+value.logo_for+'</td><td>'+value.logo_position+'</td><td>'+value.logo_type+'<br>'+size+'<br>'+dimention+'</td><td class="text-center">'+content+'</td><td class="text-center">'+value.logo_status+' &nbsp;&nbsp; <input '+sts+' id="change_status" type="checkbox" data-status="'+value.logo_id+'" data-toggle="switchery" data-secondary-color="#df3554" data-color="#18AD0C" data-size="small" /></td><td class="text-center"><button class="btn btn-danger btn-sm" id="delete_button" data-delete="'+value.logo_id+'">Delete</button></td></tr>');
                     });
                     $('[data-toggle="switchery"]').each(function (idx, obj) {
                         new Switchery($(this)[0], $(this).data());

@@ -414,7 +414,7 @@
                     }
                 })
             }
-        });
+        }); 
         $('#update_basic_info_form').on("submit",function(e){
             e.preventDefault();
             $('#update_basic_info_button').addClass('disabled');
@@ -551,7 +551,7 @@
                             type: 'success',
                             title: '',
                             text: 'Profile Updated Suvccessfully',
-                            showConfirmButton: false,
+                            showConfirmButton: false, 
                             timer:2000,
                         }).then(()=>{
                             $("#change_password_form").trigger("reset");

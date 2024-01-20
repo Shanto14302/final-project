@@ -3967,8 +3967,8 @@ input[type="button"].btn-block {
 }
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-    color: #495057;
-    background-color: #fbfbfb;
+    color: #ffffff;
+    background-color: #1322a1;
     border-color: #dee2e6 #dee2e6 #fbfbfb;
 }
 .nav-tabs .dropdown-menu {

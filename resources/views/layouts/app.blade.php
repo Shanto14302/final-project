@@ -42,40 +42,7 @@
             <div class="navbar-header">
 
                 <div class="d-flex align-items-left">
-                    <button type="button" class="btn btn-sm mr-2 d-lg-none px-3 font-size-16 header-item waves-effect"
-                        id="vertical-menu-btn">
-                        <i class="fa fa-fw fa-bars"></i>
-                    </button>
-
-                    <div class="dropdown d-none d-sm-inline-block">
-                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="mdi mdi-plus"></i> Create New
-                            <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
-                        </button>
-                        <div class="dropdown-menu">
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                Application
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                Software
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                EMS System
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                CRM App
-                            </a>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="d-flex align-items-center">
@@ -104,95 +71,7 @@
                         </div>
                     </div>
 
-                    {{-- <div class="dropdown d-inline-block">
-                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="" src="assets/images/flags/us.jpg" alt="Header Language" height="16">
-                            <span class="d-none d-sm-inline-block ml-1">English</span>
-                            <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/spain.jpg" alt="user-image" class="mr-1" height="12">
-                                <span class="align-middle">Spanish</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/germany.jpg" alt="user-image" class="mr-1" height="12">
-                                <span class="align-middle">German</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/italy.jpg" alt="user-image" class="mr-1" height="12">
-                                <span class="align-middle">Italian</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="assets/images/flags/russia.jpg" alt="user-image" class="mr-1" height="12">
-                                <span class="align-middle">Russian</span>
-                            </a>
-                        </div>
-                    </div> --}}
-
-                    <div class="dropdown d-inline-block" >
-                        <button type="button"  class="btn header-item noti-icon waves-effect"
-                            id="page-header-notifications-dropdown" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" style="width: 100px">
-                            <i class="mdi mdi-bell"></i>
-                            <livewire:all-notification />
-                            
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
-                            aria-labelledby="page-header-notifications-dropdown">
-                            <div class="p-3">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h6 class="m-0"> Notifications </h6>
-                                    </div>
-                                    <div class="col-auto">
-                                        <a href="#!" class="small"> View All</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div data-simplebar style="max-height: 230px;">
-                                @if (Auth::user()->role==1)
-                                <a href="{{ route('reset_request') }}" class="text-reset notification-item">
-                                    <div class="media">
-                                        <div class="avatar-xs mr-3">
-                                            <span class="avatar-title bg-success rounded-circle">
-                                                <i class="fas fa-key"></i>
-                                            </span>
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="mt-0 mb-1">Password Reset Request</h6>
-                                            {{-- <p class="font-size-12 mb-1">You have new follower on Instagram</p> --}}
-                                            <livewire:notification />
-                                            
-                                        </div>
-                                        <script>
-                                            // setInterval(function(){ 
-                                            //     var n1 = $('#pn');
-                                            //     alert(n1)
-                                            // }, 5000);
-                                        </script>
-                                    </div>
-                                </a>
-                                @endif
-                                
-                                
-                            </div>
-                            {{-- <div class="p-2 border-top">
-                                <a class="btn btn-sm btn-light btn-block text-center" href="javascript:void(0)">
-                                    <i class="mdi mdi-arrow-down-circle mr-1"></i> Load More..
-                                </a>
-                            </div> --}}
-                        </div>
-                    </div>
+                    
 
                     <div class="dropdown d-inline-block ml-2">
                         <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
@@ -203,12 +82,24 @@
                             <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
+
                             <a class="dropdown-item d-flex align-items-center justify-content-between"
                                 href="">
+                                @if(Auth::user()->role==4)
+                                    @php
+                                        $teacher = DB::table('teachers')->where('teacher_user_id',Auth::user()->id)->select('teacher_id')->first();
+                                    @endphp
+                                    <span>T. ID</span>
+                                    <span>
+                                        <span class="badge badge-pill badge-dark">{{ $teacher->teacher_id }}</span>
+                                    </span>
+                                @else
                                 <span>EMP. ID</span>
                                 <span>
                                     <span class="badge badge-pill badge-dark">{{ Auth::user()->id+100000 }}</span>
                                 </span>
+                                @endif
+
                             </a>
                             <a class="dropdown-item d-flex align-items-center justify-content-between"
                                 href="{{ route('admin_profile') }}">
@@ -253,14 +144,14 @@
                                 <img src="{{ asset($logo->logo_image) }}" alt="">
                             @endif
                         @else
-                            
+
                         @endif
-                        
-                        
-                        
+
+
+
                     </a><br>
                     <span class="text-white">
-                        {{ Auth::user()->role==1?'Admin':(Auth::user()->role==2?'Supervisor':(Auth::user()->role==3?'Editor':'Customer')) }}
+                        {{ Auth::user()->role==1?'Admin':(Auth::user()->role==2?'Supervisor':(Auth::user()->role==3?'Editor':(Auth::user()->role==4?'Teacher':'Student'))) }}
                     </span>
                 </div>
 
@@ -268,7 +159,7 @@
                 <div id="sidebar-menu">
                     <!-- Left Menu Start -->
                     <ul class="metismenu list-unstyled" id="side-menu">
-                        <li class="menu-title">Menu</li>
+                        <li class="menu-title text-danger">Admin</li>
 
                         <li>
                             <a href="{{ route('home') }}" class="waves-effect">
@@ -281,16 +172,24 @@
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-cog"></i><span>Control Panel</span></a>
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('view_users') }}">View Users</a></li>
-                                <li><a href="{{ route('reset_request') }}" class="waves-effect"><span>Reset Requests</span></a></li> 
-                                <li><a href="{{ route('logo') }}" class="waves-effect"><span>Web Images</span></a></li> 
+                                <li><a href="{{ route('reset_request') }}" class="waves-effect"><span>Reset Requests</span></a></li>
+                                <li><a href="{{ route('logo') }}" class="waves-effect"><span>Web Images</span></a></li>
                             </ul>
                         </li>
                         @endif
-                        
 
-                        <li class="menu-title">More</li>
-                        
-                        
+                        {{-- Spak It Solution --}}
+                        <li class="menu-title  text-danger">PMIS</li>
+                        {{-- <li>
+                            <a href="{{ route('spark_contact') }}" class="waves-effect">
+                                <i class="fa fa-address-book"></i><span>Contact Information</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('spark_main_slider') }}" class="waves-effect">
+                                <i class="fa fa-file-image"></i><span>Main Slider</span>
+                            </a>
+                        </li>
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i
                                     class="feather-map"></i><span>Maps</span></a>
@@ -298,21 +197,66 @@
                                 <li><a href="maps-google.html">Google Maps</a></li>
                                 <li><a href="maps-vector.html">Vector Maps</a></li>
                             </ul>
-                        </li>
-
+                        </li> --}}
+                        @if (Auth::user()->role==1)
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="mdi mdi-share-variant"></i><span>Multi Level</span></a>
+                            {{-- <a href="javascript: void(0);" class="has-arrow waves-effect"><i
+                                    class="mdi mdi-home"></i><span>Tea</span></a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="javascript: void(0);">Level 1.1</a></li>
-                                <li><a href="javascript: void(0);" class="has-arrow">Level 1.2</a>
-                                    <ul class="sub-menu" aria-expanded="true">
-                                        <li><a href="javascript: void(0);">Level 2.1</a></li>
-                                        <li><a href="javascript: void(0);">Level 2.2</a></li>
-                                    </ul>
+                                <li><a href="{{ route('spark_contact') }}" class="waves-effect"><i class="fa fa-address-book"></i><span>Contact Information</span></a>
+                                <li><a href="{{ route('spark_main_slider') }}" class="waves-effect"><i class="fa fa-file-image"></i><span>Main Slider</span></a>
                                 </li>
-                            </ul>
+                            </ul> --}}
+
+                            <a href="{{ route('teachers') }}" class="waves-effect">
+                                <i class="mdi mdi-cowboy"></i><span>Teachers</span>
+                            </a>
                         </li>
+                        <li>
+
+                            <a href="{{ route('students') }}" class="waves-effect">
+                                <i class="mdi mdi-account-multiple-outline"></i><span>Students</span>
+                            </a>
+                        </li>
+                        <li><a href="{{ route('supervisor_choice_request') }}" class="waves-effect"><i class="mdi mdi-file-account"></i><span>Sup. Choice Requests</span></a></li>
+                        <li><a href="{{ route('view_result_admin') }}" class="waves-effect"><i class="mdi mdi-gas-station-outline"></i><span>View Results</span></a></li>
+                        @endif
+                        @if (Auth::user()->role==4)
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-cog"></i><span>Defense</span></a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{ route('initial_phase') }}">Initial Phase</a></li>
+                                    <li><a href="{{ route('title_defense') }}">Title Defense</a></li>
+                                    <li><a href="{{ route('pre_defense') }}">Pre Defense</a></li>
+                                    <li><a href="{{ route('final_defense') }}">Final Defense</a></li>
+                                    <li><a href="{{ route('view_result') }}">View Results</a></li>
+
+                                    {{-- <li><a href="{{ route('logo') }}" class="waves-effect"><span>Web Images</span></a></li>  --}}
+                                </ul>
+                            </li>
+                        @endif
+                        @if (Auth::user()->role==5)
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect"><i class="fas fa-cog"></i><span>Defense</span></a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{ route('supervisor_choice') }}">Supervisor Choice</a></li>
+                                    @php
+                                        $defense = DB::table('phases')
+                                            ->where('phase_student_id', Auth::user()->id)
+                                            ->first();
+                                    @endphp
+                                    @if ($defense)
+                                    <li><a href="{{ route('attemp_title_defense') }}">Attemp Title Defense</a></li>
+                                    <li><a href="{{ route('attemp_pre_defense') }}">Attemp Pre Defense</a></li>
+                                    <li><a href="{{ route('attemp_final_defense') }}">Attemp Final Defense</a></li>
+                                    @endif
+
+
+                                    {{-- <li><a href="{{ route('logo') }}" class="waves-effect"><span>Web Images</span></a></li>  --}}
+                                </ul>
+                            </li>
+
+                        @endif
 
                     </ul>
                 </div>
@@ -331,20 +275,20 @@
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-6">
+                        {{-- <div class="col-sm-6">
                             @php
                             $logo = DB::table('logos')->where('logo_delete',0)->where('logo_for','Admin')->where('logo_position','admin_bottom')->where('logo_status','Active')->first();
                             @endphp
-                            {{ date('Y') }} © 
+                            {{ date('Y') }} ©
                             @if ($logo && $logo->logo_type=='text')
                                all site reserved by {{ $logo->logo_image }}
                             @elseif($logo && $logo->logo_type=='image')
                             <img src="{{ asset($logo->logo_image) }}" height="60px" width="200px" alt="">
                             @endif
-                        </div>
+                        </div> --}}
                         <div class="col-sm-6">
                             <div class="text-sm-right d-none d-sm-block">
-                                Design & Develop by MD. MUTASIM NAIB
+                                {{-- Design & Develop by MD. MUTASIM NAIB --}}
                             </div>
                         </div>
                     </div>
@@ -382,7 +326,7 @@
     <script src="{{ asset('public/main/assets/js/theme.js')}}"></script>
 
     <script src="{{ asset('public/main/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
-    
+
     @if (Session::get('admin_login_success'))
     <script>
         $(document).ready(function(){
@@ -409,7 +353,7 @@
     </script>
     @endif
 
-    
+
     @livewireScripts
 </body>
 

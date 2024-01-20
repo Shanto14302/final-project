@@ -25,7 +25,6 @@ class UploadLogoRequest extends FormRequest
             'content_for'=>'required',
             'position'=>'required',
             'type'=>'required',
-            
         ];
     }
 }

@@ -65,8 +65,61 @@ class LogoController extends Controller
                         'company_name'=> 'Dreams',
                         'logo_type'=> $data->type,
                         'logo_image' => 'public/files/web_images/'.$file_name,
-                        'logo_image_dimention'=>$height.'x'.$width,
+                        'logo_image_dimention'=>$width.'x'.$height,
                         'logo_image_size'=> Image::make(public_path('files/web_images/'.$file_name))->filesize(),
+                    ]);
+
+                    if($create){
+                        return $create;
+                    }else{
+                        return response()->json(['message'=>'Server error'],422); 
+                    }
+
+                }
+            }elseif($data->position=='spark_top'){
+                if($height!=80 || $width!=160){
+                    return response()->json(['message'=>'Spark it top logo must be 160x80'],422);
+                }else{
+                    $file = $data->file('image');
+                    $extension = $file->getClientOriginalExtension();
+                    $file_name = "spark_top-".time().'.'.$extension;
+                    
+                    $file->move(public_path('files/web_images/spark-it'),$file_name);
+                    $create = Logo::create([
+                        'logo_for'=>$data->content_for,
+                        'logo_position'=>$data->position,
+                        'company_name'=> 'Spark It Solution',
+                        'logo_type'=> $data->type,
+                        'logo_image' => 'public/files/web_images/spark-it/'.$file_name,
+                        'logo_image_dimention'=>$width.'x'.$height,
+                        'logo_image_size'=> Image::make(public_path('files/web_images/spark-it/'.$file_name))->filesize(),
+                    ]);
+
+                    if($create){
+                        return $create;
+                    }else{
+                        return response()->json(['message'=>'Server error'],422); 
+                    }
+
+                }
+            }
+            elseif($data->position=='spark_bottom'){
+                if($height!=80 || $width!=160){
+                    return response()->json(['message'=>'Spark it bottom logo must be 160x80'],422);
+                }else{
+                    $file = $data->file('image');
+                    $extension = $file->getClientOriginalExtension();
+                    $file_name = "spark_bottom-".time().'.'.$extension;
+                    
+                    $file->move(public_path('files/web_images/spark-it'),$file_name);
+                    $create = Logo::create([
+                        'logo_for'=>$data->content_for,
+                        'logo_position'=>$data->position,
+                        'company_name'=> 'Spark It Solution',
+                        'logo_type'=> $data->type,
+                        'logo_image' => 'public/files/web_images/spark-it/'.$file_name,
+                        'logo_image_dimention'=>$width.'x'.$height,
+                        'logo_image_size'=> Image::make(public_path('files/web_images/spark-it/'.$file_name))->filesize(),
                     ]);
 
                     if($create){
